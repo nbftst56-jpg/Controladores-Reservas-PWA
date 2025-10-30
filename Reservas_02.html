@@ -1,0 +1,2030 @@
+<!-- Versão Corrigida - Melhorias de Acessibilidade, Responsividade e UX/UI -->
+<!-- Data: 21/10/2025 - Manus AI -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Reservas - Cachoeira do Bom Jesus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset e configurações globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.header-content h1 i {
+    color: #4299e1;
+    margin-right: 15px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #718096;
+    font-weight: 400;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+}
+
+/* Botões */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+    transform: translateY(-2px);
+}
+
+/* Barra de estatísticas */
+.stats-bar {
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+/* Container das unidades */
+.units-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+    align-items: start;
+}
+
+/* Cards das unidades */
+.unit-card {
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    height: fit-content;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.unit-card:hover {
+    transform: translateY(-5px);
+}
+
+.unit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.unit-header h2 {
+    font-size: 1.5rem;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.unit-header h2 i {
+    color: #4299e1;
+    margin-right: 10px;
+}
+
+.unit-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.unit-reservations,
+.unit-occupancy {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+/* Calendário */
+.calendar-container {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-shrink: 0;
+}
+
+.nav-btn {
+    background: #e2e8f0;
+    border: none;
+    border-radius: 8px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover {
+    background: #cbd5e0;
+    transform: scale(1.1);
+}
+
+.month-year {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    text-align: center;
+    flex: 1;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e2e8f0;
+    border-radius: 12px;
+    padding: 5px;
+    flex: 1;
+    min-height: 280px;
+    max-height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    min-height: 40px;
+    height: auto;
+    font-size: 0.7rem;
+    width: 100%;
+    box-sizing: border-box;
+    word-break: break-word;
+    line-height: 1.2;
+    padding: 2px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.calendar-day:hover {
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.calendar-day.header {
+    background: #4a5568;
+    color: white;
+    font-weight: 600;
+    cursor: default;
+}
+
+.calendar-day.header:hover {
+    transform: none;
+}
+
+.calendar-day.other-month {
+    color: #cbd5e0;
+    background: #f7fafc;
+}
+
+.calendar-day.available {
+    background: #f0fff4;
+    color: #22543d;
+}
+
+.calendar-day.available:hover {
+    background: #c6f6d5;
+}
+
+.calendar-day.checkin {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+}
+
+.calendar-day.checkout {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    color: white;
+}
+
+.calendar-day.overlap {
+    background: linear-gradient(135deg, #9f7aea, #805ad5);
+    color: white;
+}
+
+.calendar-day.occupied {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white;
+}
+
+/* Legenda */
+.legend {
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.legend h3 {
+    margin-bottom: 15px;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+}
+
+.legend-color.available {
+    background: #f0fff4;
+    border: 2px solid #48bb78;
+}
+
+.legend-color.checkin {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+}
+
+.legend-color.checkout {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+}
+
+.legend-color.overlap {
+    background: linear-gradient(135deg, #9f7aea, #805ad5);
+}
+
+.legend-color.occupied {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+.modal-content {
+    background: white;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: calc(100vh - 40px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h2 {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #718096;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #e53e3e;
+}
+
+/* Formulário */
+#reservationForm {
+    padding: 30px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: calc(100vh - 200px);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    pointer-events: none;
+    z-index: 1001;
+    display: none;
+    max-width: 250px;
+    text-align: left;
+    line-height: 1.4;
+}
+
+/* Lista de Reservas */
+.reservations-list-section {
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.reservations-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.reservations-list-header h2 {
+    font-size: 1.8rem;
+    color: #2d3748;
+    font-weight: 700;
+}
+
+.reservations-list-header h2 i {
+    color: #4299e1;
+    margin-right: 10px;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-controls select {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.reservations-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    min-width: 700px;
+}
+
+.reservations-table th,
+.reservations-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.reservations-table th {
+    background-color: #f7fafc;
+    color: #4a5568;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.reservations-table tr:last-child td {
+    border-bottom: none;
+}
+
+.reservations-table tbody tr:hover {
+    background-color: #f0f4f8;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin: 0 5px;
+    transition: color 0.2s ease;
+}
+
+.btn-action.edit {
+    color: #4299e1;
+}
+
+.btn-action.edit:hover {
+    color: #3182ce;
+}
+
+.btn-action.whatsapp {
+    color: #25d366;
+}
+
+.btn-action.whatsapp:hover {
+    color: #1da851;
+}
+
+.btn-action.delete {
+    color: #e53e3e;
+}
+
+.btn-action.delete:hover {
+    color: #c53030;
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .header-actions {
+        margin-top: 15px;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+
+    .stats-bar {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .stat-item {
+        flex: 1 1 45%;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .units-container {
+        grid-template-columns: 1fr;
+    }
+
+    .unit-card {
+        min-height: 40px;
+    }
+
+    .calendar-day {
+        font-size: 0.6rem;
+        min-height: 35px;
+        height: auto;
+        padding: 1px;
+    }
+
+    .calendar-day-header {
+        font-size: 0.7rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    #reservationForm {
+        padding: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .reservations-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .filter-controls {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .reservations-table,
+    .reservations-table thead,
+    .reservations-table tbody,
+    .reservations-table th,
+    .reservations-table td,
+    .reservations-table tr {
+        display: block;
+    }
+
+    .reservations-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .reservations-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 15px;
+        background: white;
+    }
+
+    .reservations-table td {
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 8px 15px;
+        text-align: left;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        font-size: 0.9rem;
+    }
+
+    .reservations-table td:before {
+        content: attr(data-label) ": ";
+        font-weight: 600;
+        color: #4a5568;
+        display: inline;
+    }
+
+    .reservations-table td:last-child {
+        text-align: center;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        border-bottom: none;
+    }
+
+    .reservations-table td:last-child:before {
+        display: none;
+    }
+
+    .reservations-table tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .calendar-day {
+        font-size: 0.65rem;
+        min-height: 38px;
+        height: auto;
+        padding: 0px;
+    }
+
+    .calendar-day-header {
+        font-size: 0.65rem;
+    }
+
+    .legend-items {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-umbrella-beach"></i> Reservas Cachoeira do Bom Jesus</h1>
+                <p class="subtitle">Temporada Verão 2025/2026 • Novembro 2025 - Maio 2026</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="btnDashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
+                <button class="btn btn-secondary" id="btnImport"><i class="fas fa-upload"></i> Importar</button>
+                <input type="file" id="fileImportInput" accept=".json" style="display: none;" aria-label="Importar arquivo de reservas">
+                <button class="btn btn-secondary" id="btnExport"><i class="fas fa-download"></i> Exportar</button>
+            </div>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">Total de Reservas</span>
+                <span class="stat-value" id="totalReservations">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Dias Ocupados</span>
+                <span class="stat-value" id="occupiedDays">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Taxa de Ocupação</span>
+                <span class="stat-value" id="occupancyRate">0%</span>
+            </div>
+        </div>
+
+        <div class="units-container">
+            <!-- Unidade 01 -->
+            <div class="unit-card">
+                <div class="unit-header">
+                    <h2><i class="fas fa-home"></i> Unidade 01</h2>
+                    <div class="unit-stats">
+                        <span id="un01-reservations">0 reservas</span>
+                        <span id="un01-occupancy">0% ocupação</span>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <button class="btn btn-primary" style="width: 100%;" data-unit="UN01" onclick="app.openNewReservation(this)">
+                        <i class="fas fa-plus"></i> Nova Reserva UN01
+                    </button>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="nav-btn" aria-label="Mês anterior" title="Mês anterior" data-unit="UN01" onclick="app.previousMonth(this)"><i class="fas fa-chevron-left"></i></button>
+                        <h3 class="month-year" id="monthYear-UN01">Novembro 2025</h3>
+                        <button class="nav-btn" aria-label="Próximo mês" title="Próximo mês" data-unit="UN01" onclick="app.nextMonth(this)"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar" id="calendar-UN01"></div>
+                </div>
+            </div>
+
+            <!-- Unidade 02 -->
+            <div class="unit-card">
+                <div class="unit-header">
+                    <h2><i class="fas fa-home"></i> Unidade 02</h2>
+                    <div class="unit-stats">
+                        <span id="un02-reservations">0 reservas</span>
+                        <span id="un02-occupancy">0% ocupação</span>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <button class="btn btn-primary" style="width: 100%;" data-unit="UN02" onclick="app.openNewReservation(this)">
+                        <i class="fas fa-plus"></i> Nova Reserva UN02
+                    </button>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="nav-btn" aria-label="Mês anterior" title="Mês anterior" data-unit="UN02" onclick="app.previousMonth(this)"><i class="fas fa-chevron-left"></i></button>
+                        <h3 class="month-year" id="monthYear-UN02">Novembro 2025</h3>
+                        <button class="nav-btn" aria-label="Próximo mês" title="Próximo mês" data-unit="UN02" onclick="app.nextMonth(this)"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar" id="calendar-UN02"></div>
+                </div>
+            </div>
+
+            <!-- Unidade 03 -->
+            <div class="unit-card">
+                <div class="unit-header">
+                    <h2><i class="fas fa-home"></i> Unidade 03</h2>
+                    <div class="unit-stats">
+                        <span id="un03-reservations">0 reservas</span>
+                        <span id="un03-occupancy">0% ocupação</span>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <button class="btn btn-primary" style="width: 100%;" data-unit="UN03" onclick="app.openNewReservation(this)">
+                        <i class="fas fa-plus"></i> Nova Reserva UN03
+                    </button>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="nav-btn" aria-label="Mês anterior" title="Mês anterior" data-unit="UN03" onclick="app.previousMonth(this)"><i class="fas fa-chevron-left"></i></button>
+                        <h3 class="month-year" id="monthYear-UN03">Novembro 2025</h3>
+                        <button class="nav-btn" aria-label="Próximo mês" title="Próximo mês" data-unit="UN03" onclick="app.nextMonth(this)"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar" id="calendar-UN03"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reservations-list-section">
+            <div class="reservations-list-header">
+                <h2><i class="fas fa-list-alt"></i> Lista de Reservas</h2>
+                <div class="filter-controls">
+                    <button class="btn btn-secondary" id="btnReport"><i class="fas fa-file-alt"></i> Relatório TXT</button>
+                    <select id="filterUnit" aria-label="Filtrar por unidade">
+                        <option value="">Todas as Unidades</option>
+                        <option value="UN01">Unidade 01</option>
+                        <option value="UN02">Unidade 02</option>
+                        <option value="UN03">Unidade 03</option>
+                    </select>
+                </div>
+            </div>
+            <div class="reservations-table-container">
+                <table class="reservations-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>WhatsApp</th>
+                            <th>Unidade</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Diárias</th>
+                            <th>Status</th>
+                            <th>Valor Devido</th>
+                            <th>Valor Pago</th>
+                            <th>Data Pagamento</th>
+                            <th>Forma Pagamento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationsTableBody">
+                        <!-- Reservas serão carregadas aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>Legenda:</h3>
+            <div class="legend-items">
+                <div class="legend-item"><span class="legend-color available"></span> Disponível</div>
+                <div class="legend-item"><span class="legend-color checkin"></span> Check-in</div>
+                <div class="legend-item"><span class="legend-color checkout"></span> Check-out</div>
+                <div class="legend-item"><span class="legend-color overlap"></span> Check-in/out</div>
+                <div class="legend-item"><span class="legend-color occupied"></span> Ocupado</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Nova Reserva -->
+    <div class="modal" id="reservationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nova Reserva</h2>
+                <button class="close-btn" id="btnCloseModal">&times;</button>
+            </div>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="clientName">Nome do Cliente: <span style="color: #e53e3e;">*</span></label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp: <span style="color: #e53e3e;">*</span></label>
+                    <input type="text" id="whatsapp" placeholder="Ex: 5548999999999" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">País: <span style="color: #e53e3e;">*</span></label>
+                    <input type="text" id="country" placeholder="Ex: Brasil" required>
+                </div>
+                <div class="form-group">
+                    <label for="unit">Unidade: <span style="color: #e53e3e;">*</span></label>
+                    <select id="unit" required>
+                        <option value="">Selecione uma unidade</option>
+                        <option value="UN01">Unidade 01</option>
+                        <option value="UN02">Unidade 02</option>
+                        <option value="UN03">Unidade 03</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkinDate">Check-in: <span style="color: #e53e3e;">*</span></label>
+                        <input type="date" id="checkinDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkoutDate">Check-out: <span style="color: #e53e3e;">*</span></label>
+                        <input type="date" id="checkoutDate" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status: <span style="color: #e53e3e;">*</span></label>
+                    <select id="status" required>
+                        <option value="Resv">Reservado</option>
+                        <option value="Conf">Confirmado</option>
+                        <option value="Canc">Cancelado</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valorDevido">Valor Devido (R$):</label>
+                        <input type="number" id="valorDevido" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="valorPago">Valor Pago (R$):</label>
+                        <input type="number" id="valorPago" step="0.01" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dataPagamento">Data Pagamento:</label>
+                        <input type="date" id="dataPagamento">
+                    </div>
+                    <div class="form-group">
+                        <label for="formaPagamento">Forma Pagamento:</label>
+                        <select id="formaPagamento">
+                            <option value="">Selecione</option>
+                            <option value="PIX">PIX</option>
+                            <option value="Cartao">Cartão</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Transferencia">Transferência</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btnCancelForm">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Dashboard -->
+    <div class="modal" id="dashboardModal">
+        <div class="modal-content" style="max-width: 1200px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-chart-line"></i> Dashboard de Gestão</h2>
+                <button class="close-btn" id="btnCloseDashboard">&times;</button>
+            </div>
+            <div id="dashboardContent" style="padding: 30px; overflow-y: auto; max-height: calc(100vh - 150px);">
+                <!-- Conteúdo será carregado dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+const app = {
+    units: ["UN01", "UN02", "UN03"],
+    currentMonths: {},
+    reservations: {},
+    editingReservation: null,
+
+    init() {
+        this.units.forEach(unit => {
+            this.reservations[unit] = [];
+            this.currentMonths[unit] = new Date(2025, 10, 1);
+        });
+
+        this.loadData();
+        this.setupEventListeners();
+        this.updateAllCalendars();
+        this.updateStats();
+        this.updateReservationsList();
+    },
+
+    setupEventListeners() {
+        document.getElementById('btnDashboard').addEventListener('click', () => this.showDashboard());
+        document.getElementById('btnImport').addEventListener('click', () => document.getElementById('fileImportInput').click());
+        document.getElementById('btnExport').addEventListener('click', () => this.exportData());
+        document.getElementById('btnReport').addEventListener('click', () => this.generateReport());
+        document.getElementById('btnCloseModal').addEventListener('click', () => this.closeModal());
+        document.getElementById('btnCancelForm').addEventListener('click', () => this.closeModal());
+        document.getElementById('btnCloseDashboard').addEventListener('click', () => this.closeDashboard());
+        document.getElementById('fileImportInput').addEventListener('change', (e) => this.importData(e));
+        document.getElementById('reservationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.saveReservation();
+        });
+        document.getElementById('filterUnit').addEventListener('change', () => this.updateReservationsList());
+    },
+
+    loadData() {
+        const storedData = localStorage.getItem("reservasCachoeira");
+        if (storedData) {
+            try {
+                const parsedData = JSON.parse(storedData);
+                for (const unit in parsedData) {
+                    if (parsedData[unit] && Array.isArray(parsedData[unit])) {
+                        this.reservations[unit] = parsedData[unit].map(res => ({
+                            ...res,
+                            checkIn: new Date(res.checkIn),
+                            checkOut: new Date(res.checkOut)
+                        }));
+                    }
+                }
+            } catch (error) {
+                console.error("Erro ao carregar dados:", error);
+            }
+        }
+    },
+
+    saveData() {
+        const dataToSave = {};
+        for (const unit in this.reservations) {
+            dataToSave[unit] = this.reservations[unit].map(res => ({
+                ...res,
+                checkIn: res.checkIn.toISOString(),
+                checkOut: res.checkOut.toISOString()
+            }));
+        }
+        localStorage.setItem("reservasCachoeira", JSON.stringify(dataToSave));
+    },
+
+    openNewReservation(button) {
+        const unit = button.getAttribute('data-unit');
+        this.editingReservation = null;
+        const modal = document.getElementById("reservationModal");
+        const form = document.getElementById("reservationForm");
+        const title = document.getElementById("modalTitle");
+        
+        if (modal && form && title) {
+            title.textContent = "Nova Reserva";
+            form.reset();
+            
+            if (unit) {
+                document.getElementById("unit").value = unit;
+            }
+            
+            modal.style.display = "block";
+        }
+    },
+
+    closeModal() {
+        const modal = document.getElementById("reservationModal");
+        if (modal) {
+            modal.style.display = "none";
+        }
+        this.editingReservation = null;
+    },
+
+    saveReservation() {
+        const clientName = document.getElementById("clientName").value;
+        const whatsapp = document.getElementById("whatsapp").value;
+        const country = document.getElementById("country").value;
+        const unit = document.getElementById("unit").value;
+        const checkinDateStr = document.getElementById("checkinDate").value;
+        const checkoutDateStr = document.getElementById("checkoutDate").value;
+        const status = document.getElementById("status").value;
+        const valorDevido = document.getElementById("valorDevido").value || 0;
+        const valorPago = document.getElementById("valorPago").value || 0;
+        const dataPagamento = document.getElementById("dataPagamento").value;
+        const formaPagamento = document.getElementById("formaPagamento").value;
+
+        if (!clientName || !whatsapp || !country || !unit || !checkinDateStr || !checkoutDateStr || !status) {
+            alert("Por favor, preencha todos os campos obrigatórios.");
+            return;
+        }
+
+        const checkIn = new Date(checkinDateStr + "T00:00:00");
+        const checkOut = new Date(checkoutDateStr + "T00:00:00");
+
+        if (checkIn >= checkOut) {
+            alert("A data de check-out deve ser posterior à data de check-in.");
+            return;
+        }
+
+        const reservation = {
+            id: this.editingReservation ? this.editingReservation.id : Date.now().toString(),
+            clientName,
+            whatsapp,
+            country,
+            unit,
+            checkIn,
+            checkOut,
+            status,
+            valorDevido: parseFloat(valorDevido),
+            valorPago: parseFloat(valorPago),
+            dataPagamento: dataPagamento || null,
+            formaPagamento: formaPagamento || null
+        };
+
+        if (this.editingReservation) {
+            const index = this.reservations[unit].findIndex(r => r.id === this.editingReservation.id);
+            if (index !== -1) {
+                this.reservations[unit][index] = reservation;
+            }
+        } else {
+            this.reservations[unit].push(reservation);
+        }
+
+        this.saveData();
+        this.updateAllCalendars();
+        this.updateStats();
+        this.updateReservationsList();
+        this.closeModal();
+    },
+
+    previousMonth(button) {
+        const unitId = button.getAttribute('data-unit');
+        if (this.currentMonths[unitId]) {
+            this.currentMonths[unitId].setMonth(this.currentMonths[unitId].getMonth() - 1);
+            this.updateCalendar(unitId);
+        }
+    },
+
+    nextMonth(button) {
+        const unitId = button.getAttribute('data-unit');
+        if (this.currentMonths[unitId]) {
+            this.currentMonths[unitId].setMonth(this.currentMonths[unitId].getMonth() + 1);
+            this.updateCalendar(unitId);
+        }
+    },
+
+    updateAllCalendars() {
+        this.units.forEach(unit => {
+            this.updateCalendar(unit);
+        });
+    },
+
+    updateCalendar(unitId) {
+        const calendar = document.getElementById(`calendar-${unitId}`);
+        const monthYear = document.getElementById(`monthYear-${unitId}`);
+        
+        if (!calendar || !monthYear) return;
+
+        const currentMonth = this.currentMonths[unitId];
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+
+        const monthNames = [
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ];
+        monthYear.textContent = `${monthNames[month]} ${year}`;
+
+        calendar.innerHTML = "";
+
+        const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        daysOfWeek.forEach(day => {
+            const dayHeader = document.createElement("div");
+            dayHeader.className = "calendar-day header";
+            dayHeader.textContent = day;
+            calendar.appendChild(dayHeader);
+        });
+
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const startDate = new Date(firstDay);
+        startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+        for (let i = 0; i < 42; i++) {
+            const currentDate = new Date(startDate);
+            currentDate.setDate(startDate.getDate() + i);
+            
+            const dayElement = document.createElement("div");
+            dayElement.className = "calendar-day";
+            dayElement.textContent = currentDate.getDate();
+
+            if (currentDate.getMonth() !== month) {
+                dayElement.classList.add("other-month");
+            }
+
+            const dayReservations = this.getReservationsForDay(unitId, currentDate);
+            const isCheckInDay = this.isCheckInDay(unitId, currentDate);
+            const isCheckOutDay = this.isCheckOutDay(unitId, currentDate);
+
+            if (isCheckInDay && isCheckOutDay) {
+                dayElement.classList.add("overlap");
+            } else if (isCheckInDay) {
+                dayElement.classList.add("checkin");
+            } else if (isCheckOutDay) {
+                dayElement.classList.add("checkout");
+            } else if (dayReservations.length > 0) {
+                dayElement.classList.add("occupied");
+            }
+
+            const reservation = dayReservations[0] || isCheckInDay || isCheckOutDay;
+            if (reservation) {
+                dayElement.addEventListener("mouseenter", (e) => {
+                    if (window.innerWidth > 768) {
+                        this.showTooltip(e, reservation);
+                    }
+                });
+                dayElement.addEventListener("mouseleave", () => {
+                    if (window.innerWidth > 768) {
+                        this.hideTooltip();
+                    }
+                });
+
+                dayElement.addEventListener("click", (e) => {
+                    if (window.innerWidth <= 768) {
+                        this.showTooltip(e, reservation);
+                    } else {
+                        this.editReservation(reservation);
+                    }
+                });
+            }
+
+            calendar.appendChild(dayElement);
+        }
+    },
+
+    isSameDay(date1, date2) {
+        return date1.getFullYear() === date2.getFullYear() &&
+               date1.getMonth() === date2.getMonth() &&
+               date1.getDate() === date2.getDate();
+    },
+
+    getReservationsForDay(unitId, date) {
+        return this.reservations[unitId].filter(reservation => {
+            const checkIn = new Date(reservation.checkIn);
+            const checkOut = new Date(reservation.checkOut);
+            return date >= checkIn && date < checkOut;
+        });
+    },
+
+    isCheckInDay(unitId, date) {
+        return this.reservations[unitId].find(res => this.isSameDay(new Date(res.checkIn), date));
+    },
+
+    isCheckOutDay(unitId, date) {
+        return this.reservations[unitId].find(res => this.isSameDay(new Date(res.checkOut), date));
+    },
+
+    showTooltip(event, reservation) {
+        const tooltip = document.getElementById("tooltip");
+        if (!tooltip) return;
+        
+        const checkIn = new Date(reservation.checkIn);
+        const checkOut = new Date(reservation.checkOut);
+
+        const checkInStr = checkIn.toLocaleDateString("pt-BR", { timeZone: 'UTC' });
+        const checkOutStr = checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' });
+        const diffTime = checkOut.getTime() - checkIn.getTime();
+        const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        let content = `<strong>${reservation.clientName}</strong><br>`;
+        content += `Check-in: ${checkInStr}<br>`;
+        content += `Check-out: ${checkOutStr}<br>`;
+        content += `Diárias: ${days}<br>`;
+        content += `Status: ${reservation.status}`;
+        
+        if (reservation.valorDevido > 0) {
+            content += `<br>Valor Devido: R$ ${reservation.valorDevido.toFixed(2)}`;
+        }
+        if (reservation.valorPago > 0) {
+            content += `<br>Valor Pago: R$ ${reservation.valorPago.toFixed(2)}`;
+        }
+        if (reservation.dataPagamento) {
+            content += `<br>Data Pagamento: ${new Date(reservation.dataPagamento).toLocaleDateString("pt-BR", { timeZone: 'UTC' })}`;
+        }
+        if (reservation.formaPagamento) {
+            content += `<br>Forma Pagamento: ${reservation.formaPagamento}`;
+        }
+
+        tooltip.innerHTML = content;
+        tooltip.style.display = "block";
+        tooltip.style.left = event.pageX + 10 + "px";
+        tooltip.style.top = event.pageY + 10 + "px";
+    },
+
+    hideTooltip() {
+        const tooltip = document.getElementById("tooltip");
+        if (tooltip) {
+            tooltip.style.display = "none";
+        }
+    },
+
+    editReservation(reservation) {
+        this.editingReservation = reservation;
+        const modal = document.getElementById("reservationModal");
+        const title = document.getElementById("modalTitle");
+        
+        if (modal && title) {
+            title.textContent = "Editar Reserva";
+            
+            const checkIn = new Date(reservation.checkIn);
+            const checkOut = new Date(reservation.checkOut);
+
+            document.getElementById("clientName").value = reservation.clientName;
+            document.getElementById("whatsapp").value = reservation.whatsapp;
+            document.getElementById("country").value = reservation.country;
+            document.getElementById("unit").value = reservation.unit;
+            document.getElementById("checkinDate").value = checkIn.toISOString().split("T")[0];
+            document.getElementById("checkoutDate").value = checkOut.toISOString().split("T")[0];
+            document.getElementById("status").value = reservation.status;
+            document.getElementById("valorDevido").value = reservation.valorDevido || "";
+            document.getElementById("valorPago").value = reservation.valorPago || "";
+            document.getElementById("dataPagamento").value = reservation.dataPagamento || "";
+            document.getElementById("formaPagamento").value = reservation.formaPagamento || "";
+            
+            modal.style.display = "block";
+        }
+    },
+
+    updateStats() {
+        let totalReservations = 0;
+        let totalDaysOccupied = 0;
+
+        this.units.forEach(unit => {
+            const reservations = this.reservations[unit] || [];
+            totalReservations += reservations.length;
+            
+            let unitTotalDaysOccupied = 0;
+            reservations.forEach(reservation => {
+                const checkIn = new Date(reservation.checkIn);
+                const checkOut = new Date(reservation.checkOut);
+                const days = (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24);
+                unitTotalDaysOccupied += days;
+            });
+            totalDaysOccupied += unitTotalDaysOccupied;
+
+            const unitReservationsEl = document.getElementById(`${unit.toLowerCase()}-reservations`);
+            const unitOccupancyEl = document.getElementById(`${unit.toLowerCase()}-occupancy`);
+            
+            if (unitReservationsEl) {
+                unitReservationsEl.textContent = `${reservations.length} reservas`;
+            }
+            
+            if (unitOccupancyEl) {
+                const occupancyRate = Math.round((unitTotalDaysOccupied / (6 * 30)) * 100);
+                unitOccupancyEl.textContent = `${occupancyRate}% ocupação`;
+            }
+        });
+
+        const totalReservationsEl = document.getElementById("totalReservations");
+        const occupiedDaysEl = document.getElementById("occupiedDays");
+        const occupancyRateEl = document.getElementById("occupancyRate");
+
+        if (totalReservationsEl) {
+            totalReservationsEl.textContent = totalReservations;
+        }
+        
+        if (occupiedDaysEl) {
+            occupiedDaysEl.textContent = totalDaysOccupied;
+        }
+        
+        if (occupancyRateEl) {
+            const totalPossibleDays = 3 * 6 * 30;
+            const occupancyRate = Math.round((totalDaysOccupied / totalPossibleDays) * 100);
+            occupancyRateEl.textContent = `${occupancyRate}%`;
+        }
+    },
+
+    updateReservationsList() {
+        const tbody = document.getElementById("reservationsTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        const filterUnit = document.getElementById("filterUnit").value;
+        let filteredReservations = [];
+        this.units.forEach(unit => {
+            if (!filterUnit || unit === filterUnit) {
+                filteredReservations = filteredReservations.concat(this.reservations[unit]);
+            }
+        });
+
+        filteredReservations.forEach(reservation => {
+            const row = document.createElement("tr");
+            const checkIn = new Date(reservation.checkIn);
+            const checkOut = new Date(reservation.checkOut);
+            const days = (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24);
+            
+            const dataPagamentoStr = reservation.dataPagamento ? new Date(reservation.dataPagamento).toLocaleDateString("pt-BR", { timeZone: 'UTC' }) : '';
+
+            row.innerHTML = `
+                <td data-label="Cliente">${reservation.clientName}</td>
+                <td data-label="WhatsApp">${reservation.whatsapp}</td>
+                <td data-label="Unidade">${reservation.unit}</td>
+                <td data-label="Check-in">${checkIn.toLocaleDateString("pt-BR", { timeZone: 'UTC' })}</td>
+                <td data-label="Check-out">${checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' })}</td>
+                <td data-label="Diárias">${days}</td>
+                <td data-label="Status">${reservation.status}</td>
+                <td data-label="Valor Devido">R$ ${(reservation.valorDevido || 0).toFixed(2)}</td>
+                <td data-label="Valor Pago">R$ ${(reservation.valorPago || 0).toFixed(2)}</td>
+                <td data-label="Data Pgto">${dataPagamentoStr}</td>
+                <td data-label="Forma Pgto">${reservation.formaPagamento || ''}</td>
+                <td data-label="Ações">
+                    <button onclick="app.editReservationById('${reservation.id}')" class="btn-action edit" title="Editar" aria-label="Editar reserva">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="app.sendWhatsAppMessage('${reservation.id}')" class="btn-action whatsapp" title="WhatsApp" aria-label="Enviar mensagem WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button onclick="app.deleteReservation('${reservation.id}')" class="btn-action delete" title="Excluir" aria-label="Excluir reserva">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    },
+
+    findReservationById(id) {
+        for (const unit of this.units) {
+            const reservation = this.reservations[unit].find(r => r.id === id);
+            if (reservation) {
+                return reservation;
+            }
+        }
+        return null;
+    },
+
+    editReservationById(id) {
+        const reservation = this.findReservationById(id);
+        if (reservation) {
+            this.editReservation(reservation);
+        }
+    },
+
+    deleteReservation(id) {
+        if (!confirm("Tem certeza que deseja excluir esta reserva?")) {
+            return;
+        }
+
+        for (const unit of this.units) {
+            const index = this.reservations[unit].findIndex(r => r.id === id);
+            if (index !== -1) {
+                this.reservations[unit].splice(index, 1);
+                this.saveData();
+                this.updateAllCalendars();
+                this.updateStats();
+                this.updateReservationsList();
+                return;
+            }
+        }
+    },
+
+    sendWhatsAppMessage(id) {
+        const reservation = this.findReservationById(id);
+        if (!reservation) return;
+
+        const checkIn = new Date(reservation.checkIn);
+        const checkOut = new Date(reservation.checkOut);
+        const days = (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24);
+
+        const message = `Olá ${reservation.clientName}! Sua reserva na Unidade ${reservation.unit} está confirmada. Check-in: ${checkIn.toLocaleDateString("pt-BR", { timeZone: 'UTC' })}, Check-out: ${checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' })} (${days} diárias).`;
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${reservation.whatsapp}&text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    },
+
+    exportData() {
+        const dataStr = JSON.stringify(this.reservations, null, 2);
+        const blob = new Blob([dataStr], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "reservas_backup.json";
+        link.click();
+        URL.revokeObjectURL(url);
+    },
+
+    importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (confirm("Isso substituirá todas as reservas atuais. Deseja continuar?")) {
+                    this.units.forEach(unit => { this.reservations[unit] = []; });
+
+                    for (const unit in importedData) {
+                        if (this.units.includes(unit) && Array.isArray(importedData[unit])) {
+                            this.reservations[unit] = importedData[unit].map(res => ({
+                                ...res,
+                                checkIn: new Date(res.checkIn),
+                                checkOut: new Date(res.checkOut)
+                            }));
+                        }
+                    }
+
+                    this.saveData();
+                    this.updateAllCalendars();
+                    this.updateStats();
+                    this.updateReservationsList();
+                    alert("Dados importados com sucesso!");
+                }
+            } catch (error) {
+                alert("Erro ao importar dados. Verifique se o arquivo é válido.");
+            }
+        };
+        reader.readAsText(file);
+    },
+
+    generateReport() {
+        let report = "=== RELATÓRIO DE RESERVAS - CACHOEIRA DO BOM JESUS ===\n";
+        report += `Temporada Verão 2025/2026\n`;
+        report += `Gerado em: ${new Date().toLocaleString("pt-BR")}\n\n`;
+
+        let totalReservations = 0;
+        let totalDaysOccupied = 0;
+        let totalRevenue = 0;
+        let totalPaid = 0;
+
+        this.units.forEach(unit => {
+            totalReservations += this.reservations[unit].length;
+            this.reservations[unit].forEach(res => {
+                const checkIn = new Date(res.checkIn);
+                const checkOut = new Date(res.checkOut);
+                const days = (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24);
+                totalDaysOccupied += days;
+                totalRevenue += res.valorDevido || 0;
+                totalPaid += res.valorPago || 0;
+            });
+        });
+
+        report += "ESTATÍSTICAS GERAIS:\n";
+        report += `- Total de Reservas: ${totalReservations}\n`;
+        report += `- Total de Diárias Ocupadas: ${totalDaysOccupied}\n`;
+        report += `- Receita Prevista: R$ ${totalRevenue.toFixed(2)}\n`;
+        report += `- Receita Recebida: R$ ${totalPaid.toFixed(2)}\n`;
+        report += `- Saldo Pendente: R$ ${(totalRevenue - totalPaid).toFixed(2)}\n`;
+        report += `- Taxa de Ocupação: ${Math.round((totalDaysOccupied / (3 * 6 * 30)) * 100)}%\n\n`;
+
+        report += "=== ANÁLISE FINANCEIRA POR MÊS ===\n\n";
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        
+        for (let month = 10; month <= 15; month++) {
+            const monthIndex = month > 11 ? month - 12 : month;
+            const year = month > 11 ? 2026 : 2025;
+            const monthName = monthNames[monthIndex];
+            
+            report += `${monthName} ${year}:\n`;
+            
+            this.units.forEach(unit => {
+                const monthReservations = this.reservations[unit].filter(res => {
+                    const checkIn = new Date(res.checkIn);
+                    return checkIn.getFullYear() === year && checkIn.getMonth() === monthIndex;
+                });
+                
+                let monthRevenue = 0;
+                let monthPaid = 0;
+                monthReservations.forEach(res => {
+                    monthRevenue += res.valorDevido || 0;
+                    monthPaid += res.valorPago || 0;
+                });
+                
+                if (monthReservations.length > 0) {
+                    report += `  ${unit}: ${monthReservations.length} reservas | Previsto: R$ ${monthRevenue.toFixed(2)} | Recebido: R$ ${monthPaid.toFixed(2)} | Pendente: R$ ${(monthRevenue - monthPaid).toFixed(2)}\n`;
+                }
+            });
+            report += "\n";
+        }
+
+        report += "=== ANÁLISE DE FAXINAS ===\n\n";
+        this.units.forEach(unit => {
+            const unitReservations = this.reservations[unit];
+            report += `${unit}:\n`;
+            
+            let faxinasRealizadas = 0;
+            let faxinasPendentes = 0;
+            
+            unitReservations.forEach(res => {
+                const checkOut = new Date(res.checkOut);
+                const hoje = new Date();
+                hoje.setHours(0, 0, 0, 0);
+                
+                if (checkOut < hoje) {
+                    faxinasRealizadas++;
+                    report += `  ✓ Faxina realizada - Check-out: ${checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' })} - Cliente: ${res.clientName}\n`;
+                } else {
+                    faxinasPendentes++;
+                    report += `  ⏳ Faxina pendente - Check-out: ${checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' })} - Cliente: ${res.clientName}\n`;
+                }
+            });
+            
+            report += `  Total: ${faxinasRealizadas} realizadas | ${faxinasPendentes} pendentes\n\n`;
+        });
+
+        report += "=== DETALHAMENTO POR UNIDADE ===\n\n";
+        this.units.forEach(unit => {
+            report += `=== ${unit} ===\n`;
+            const unitReservations = this.reservations[unit];
+            report += `Reservas: ${unitReservations.length}\n`;
+            
+            let unitDaysOccupied = 0;
+            let unitRevenue = 0;
+            let unitPaid = 0;
+            
+            unitReservations.forEach(res => {
+                const checkIn = new Date(res.checkIn);
+                const checkOut = new Date(res.checkOut);
+                const days = (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24);
+                unitDaysOccupied += days;
+                unitRevenue += res.valorDevido || 0;
+                unitPaid += res.valorPago || 0;
+                
+                const dataPagamentoStr = res.dataPagamento ? new Date(res.dataPagamento).toLocaleDateString("pt-BR") : 'N/A';
+
+                report += `\n- ${res.clientName} (${res.whatsapp})\n`;
+                report += `  Check-in: ${checkIn.toLocaleDateString("pt-BR", { timeZone: 'UTC' })}\n`;
+                report += `  Check-out: ${checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' })}\n`;
+                report += `  Diárias: ${days} | Status: ${res.status}\n`;
+                report += `  WhatsApp: ${res.whatsapp}\n`;
+                report += `  Valor Devido: R$ ${(res.valorDevido || 0).toFixed(2)}\n`;
+                report += `  Valor Pago: R$ ${(res.valorPago || 0).toFixed(2)}\n`;
+                report += `  Saldo: R$ ${((res.valorDevido || 0) - (res.valorPago || 0)).toFixed(2)}\n`;
+                report += `  Data Pagamento: ${dataPagamentoStr}\n`;
+                report += `  Forma Pagamento: ${res.formaPagamento || 'N/A'}\n`;
+            });
+            
+            report += `\nTotal de diárias ocupadas: ${unitDaysOccupied}\n`;
+            report += `Receita prevista: R$ ${unitRevenue.toFixed(2)}\n`;
+            report += `Receita recebida: R$ ${unitPaid.toFixed(2)}\n`;
+            report += `Saldo pendente: R$ ${(unitRevenue - unitPaid).toFixed(2)}\n`;
+            report += `Taxa de ocupação: ${Math.round((unitDaysOccupied / (6 * 30)) * 100)}%\n\n`;
+        });
+
+        const blob = new Blob([report], {type: "text/plain;charset=utf-8"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `relatorio_reservas_${new Date().toISOString().split("T")[0]}.txt`;
+        link.click();
+        URL.revokeObjectURL(url);
+    },
+
+    showDashboard() {
+        const modal = document.getElementById("dashboardModal");
+        const content = document.getElementById("dashboardContent");
+        
+        if (!modal || !content) return;
+        
+        let totalReservations = 0;
+        let totalDaysOccupied = 0;
+        let totalRevenue = 0;
+        let totalPaid = 0;
+        
+        const monthlyData = {};
+        const unitData = {};
+        
+        this.units.forEach(unit => {
+            unitData[unit] = {
+                reservations: this.reservations[unit].length,
+                daysOccupied: 0,
+                revenue: 0,
+                paid: 0,
+                faxinasRealizadas: 0,
+                faxinasPendentes: 0
+            };
+            
+            totalReservations += this.reservations[unit].length;
+            
+            this.reservations[unit].forEach(res => {
+                const checkIn = new Date(res.checkIn);
+                const checkOut = new Date(res.checkOut);
+                const days = (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24);
+                
+                totalDaysOccupied += days;
+                totalRevenue += res.valorDevido || 0;
+                totalPaid += res.valorPago || 0;
+                
+                unitData[unit].daysOccupied += days;
+                unitData[unit].revenue += res.valorDevido || 0;
+                unitData[unit].paid += res.valorPago || 0;
+                
+                const hoje = new Date();
+                hoje.setHours(0, 0, 0, 0);
+                if (checkOut < hoje) {
+                    unitData[unit].faxinasRealizadas++;
+                } else {
+                    unitData[unit].faxinasPendentes++;
+                }
+                
+                const monthKey = `${checkIn.getFullYear()}-${String(checkIn.getMonth() + 1).padStart(2, '0')}`;
+                if (!monthlyData[monthKey]) {
+                    monthlyData[monthKey] = {
+                        UN01: { reservations: 0, revenue: 0, paid: 0 },
+                        UN02: { reservations: 0, revenue: 0, paid: 0 },
+                        UN03: { reservations: 0, revenue: 0, paid: 0 }
+                    };
+                }
+                monthlyData[monthKey][unit].reservations++;
+                monthlyData[monthKey][unit].revenue += res.valorDevido || 0;
+                monthlyData[monthKey][unit].paid += res.valorPago || 0;
+            });
+        });
+        
+        let html = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 8px;">Total de Reservas</div>
+                    <div style="font-size: 2.5rem; font-weight: 700;">${totalReservations}</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 8px;">Dias Ocupados</div>
+                    <div style="font-size: 2.5rem; font-weight: 700;">${totalDaysOccupied}</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 8px;">Taxa de Ocupação</div>
+                    <div style="font-size: 2.5rem; font-weight: 700;">${Math.round((totalDaysOccupied / (3 * 6 * 30)) * 100)}%</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 8px;">Receita Total</div>
+                    <div style="font-size: 2.5rem; font-weight: 700;">R$ ${totalRevenue.toFixed(0)}</div>
+                </div>
+            </div>
+            
+            <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 1.5rem;"><i class="fas fa-chart-bar"></i> Análise Financeira por Mês</h3>
+            <div style="background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 12px; text-align: left; color: #4a5568; font-weight: 600;">Mês</th>
+                            <th style="padding: 12px; text-align: center; color: #4a5568; font-weight: 600;">UN01</th>
+                            <th style="padding: 12px; text-align: center; color: #4a5568; font-weight: 600;">UN02</th>
+                            <th style="padding: 12px; text-align: center; color: #4a5568; font-weight: 600;">UN03</th>
+                            <th style="padding: 12px; text-align: right; color: #4a5568; font-weight: 600;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        const sortedMonths = Object.keys(monthlyData).sort();
+        
+        sortedMonths.forEach(monthKey => {
+            const [year, month] = monthKey.split('-');
+            const monthName = `${monthNames[parseInt(month) - 1]}/${year}`;
+            const data = monthlyData[monthKey];
+            
+            const totalMonth = data.UN01.revenue + data.UN02.revenue + data.UN03.revenue;
+            const totalPaidMonth = data.UN01.paid + data.UN02.paid + data.UN03.paid;
+            
+            html += `
+                <tr style="border-bottom: 1px solid #edf2f7;">
+                    <td style="padding: 12px; font-weight: 500;">${monthName}</td>
+                    <td style="padding: 12px; text-align: center; font-size: 0.9rem;">
+                        ${data.UN01.reservations} res.<br>
+                        <span style="color: #48bb78; font-weight: 600;">R$ ${data.UN01.revenue.toFixed(0)}</span><br>
+                        <span style="color: #718096; font-size: 0.85rem;">(Pago: R$ ${data.UN01.paid.toFixed(0)})</span>
+                    </td>
+                    <td style="padding: 12px; text-align: center; font-size: 0.9rem;">
+                        ${data.UN02.reservations} res.<br>
+                        <span style="color: #48bb78; font-weight: 600;">R$ ${data.UN02.revenue.toFixed(0)}</span><br>
+                        <span style="color: #718096; font-size: 0.85rem;">(Pago: R$ ${data.UN02.paid.toFixed(0)})</span>
+                    </td>
+                    <td style="padding: 12px; text-align: center; font-size: 0.9rem;">
+                        ${data.UN03.reservations} res.<br>
+                        <span style="color: #48bb78; font-weight: 600;">R$ ${data.UN03.revenue.toFixed(0)}</span><br>
+                        <span style="color: #718096; font-size: 0.85rem;">(Pago: R$ ${data.UN03.paid.toFixed(0)})</span>
+                    </td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600; color: #2d3748;">
+                        R$ ${totalMonth.toFixed(2)}<br>
+                        <span style="color: #718096; font-size: 0.85rem; font-weight: 400;">(Pago: R$ ${totalPaidMonth.toFixed(2)})</span>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        html += `
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 1.5rem;">
+                <i class="fas fa-broom"></i> Controle de Faxinas
+                <button onclick="app.sendFaxinasWhatsApp()" class="btn btn-secondary" style="float: right; font-size: 0.9rem; padding: 8px 16px;">
+                    <i class="fab fa-whatsapp"></i> Enviar Lista
+                </button>
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+        `;
+        
+        this.units.forEach(unit => {
+            const data = unitData[unit];
+            html += `
+                <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+                    <h4 style="color: #2d3748; margin-bottom: 15px; font-size: 1.2rem;">${unit}</h4>
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #48bb78; font-size: 1.5rem; font-weight: 700;">${data.faxinasRealizadas}</span>
+                        <span style="color: #718096; margin-left: 8px;">realizadas</span>
+                    </div>
+                    <div>
+                        <span style="color: #ed8936; font-size: 1.5rem; font-weight: 700;">${data.faxinasPendentes}</span>
+                        <span style="color: #718096; margin-left: 8px;">pendentes</span>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += `
+            </div>
+            
+            <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 1.5rem;"><i class="fas fa-home"></i> Desempenho por Unidade</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        `;
+        
+        this.units.forEach(unit => {
+            const data = unitData[unit];
+            const occupancyRate = Math.round((data.daysOccupied / (6 * 30)) * 100);
+            const pendente = data.revenue - data.paid;
+            
+            html += `
+                <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+                    <h4 style="color: #2d3748; margin-bottom: 20px; font-size: 1.3rem; font-weight: 700;">${unit}</h4>
+                    <div style="margin-bottom: 12px;">
+                        <div style="color: #718096; font-size: 0.9rem; margin-bottom: 4px;">Reservas</div>
+                        <div style="font-size: 1.8rem; font-weight: 700; color: #4299e1;">${data.reservations}</div>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <div style="color: #718096; font-size: 0.9rem; margin-bottom: 4px;">Taxa de Ocupação</div>
+                        <div style="font-size: 1.8rem; font-weight: 700; color: #9f7aea;">${occupancyRate}%</div>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <div style="color: #718096; font-size: 0.9rem; margin-bottom: 4px;">Receita Prevista</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #48bb78;">R$ ${data.revenue.toFixed(2)}</div>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <div style="color: #718096; font-size: 0.9rem; margin-bottom: 4px;">Receita Recebida</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #38a169;">R$ ${data.paid.toFixed(2)}</div>
+                    </div>
+                    <div>
+                        <div style="color: #718096; font-size: 0.9rem; margin-bottom: 4px;">Saldo Pendente</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: ${pendente > 0 ? '#ed8936' : '#48bb78'};">R$ ${pendente.toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += `</div>`;
+        
+        content.innerHTML = html;
+        modal.style.display = "block";
+    },
+
+    closeDashboard() {
+        const modal = document.getElementById("dashboardModal");
+        if (modal) {
+            modal.style.display = "none";
+        }
+    },
+
+    sendFaxinasWhatsApp() {
+        // Número do WhatsApp do setor de faxinas (pode ser configurado)
+        const whatsappNumber = prompt("Digite o número do WhatsApp para enviar a lista de faxinas (com código do país):", "5548999999999");
+        
+        if (!whatsappNumber) return;
+
+        let message = "🧹 *LISTA DE FAXINAS - CACHOEIRA DO BOM JESUS*\n\n";
+        message += `📅 Gerado em: ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}\n\n`;
+
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
+        let totalRealizadas = 0;
+        let totalPendentes = 0;
+
+        this.units.forEach(unit => {
+            const unitReservations = this.reservations[unit];
+            
+            if (unitReservations.length === 0) return;
+
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `🏠 *${unit}*\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n\n`;
+
+            let pendentes = [];
+            let realizadas = [];
+
+            unitReservations.forEach(res => {
+                const checkOut = new Date(res.checkOut);
+                const checkOutStr = checkOut.toLocaleDateString("pt-BR", { timeZone: 'UTC' });
+                
+                if (checkOut < hoje) {
+                    realizadas.push(`✅ ${checkOutStr} - ${res.clientName}`);
+                } else {
+                    pendentes.push({
+                        date: checkOut,
+                        text: `⏳ ${checkOutStr} - ${res.clientName}`
+                    });
+                }
+            });
+
+            // Ordenar pendentes por data
+            pendentes.sort((a, b) => a.date - b.date);
+
+            if (pendentes.length > 0) {
+                message += `*FAXINAS PENDENTES (${pendentes.length}):*\n`;
+                pendentes.forEach(item => {
+                    message += `${item.text}\n`;
+                });
+                message += `\n`;
+                totalPendentes += pendentes.length;
+            }
+
+            if (realizadas.length > 0) {
+                message += `*FAXINAS REALIZADAS (${realizadas.length}):*\n`;
+                realizadas.forEach(item => {
+                    message += `${item}\n`;
+                });
+                message += `\n`;
+                totalRealizadas += realizadas.length;
+            }
+        });
+
+        message += `━━━━━━━━━━━━━━━━━━\n`;
+        message += `📊 *RESUMO GERAL*\n`;
+        message += `━━━━━━━━━━━━━━━━━━\n`;
+        message += `✅ Realizadas: ${totalRealizadas}\n`;
+        message += `⏳ Pendentes: ${totalPendentes}\n`;
+        message += `📋 Total: ${totalRealizadas + totalPendentes}\n\n`;
+        message += `_Sistema de Gestão de Reservas_\n`;
+        message += `_Cachoeira do Bom Jesus_`;
+
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+    app.init();
+});
+    </script>
+</body>
+</html>
