@@ -2,9 +2,9 @@ const CACHE_NAME = "simuladores-cache-v1";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
-  "./CONTres01.html",
-  "./CONTres02.html",
-  "./CONTres03.html",
+  "./Reservas_01.html",
+  "./Reservas_02.html",
+  "./Reservas_03.html",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png"
@@ -25,3 +25,4 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
