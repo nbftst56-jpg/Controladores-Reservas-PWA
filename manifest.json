@@ -1,6 +1,6 @@
 {
-  "name": "Controladores Reservas PWA",
-  "short_name": "Controladores Reservas",
+  "name": "Sistemas Reservas PWA",
+  "short_name": "Sistemas Reservas",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -18,3 +18,4 @@
     }
   ]
 }
+
